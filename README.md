@@ -10,9 +10,14 @@ Workflows are Git repositories containing scripts, templates, agent configuratio
 
 ### Spec Kit Workflow (Default)
 
-**Repository:** `https://github.com/ambient-code/spec-kit-template.git`
-
 A comprehensive workflow for planning and implementing features using a specification-first approach.
+
+**Default Configuration:**
+- **Repository:** `https://github.com/Gkrumbach07/spec-kit-template.git`
+- **Branch:** `main`
+- **Path:** `workflows/spec-kit`
+
+*Note: These defaults can be overridden via environment variables in the vTeam backend deployment. See Configuration section below.*
 
 **Structure:**
 ```
@@ -86,9 +91,9 @@ The workflow will be cloned into your session's workspace and set as Claude's wo
 POST /api/projects/{project}/agentic-sessions/{session}/workflow
 
 {
-  "gitUrl": "https://github.com/ambient-code/spec-kit-template.git",
+  "gitUrl": "https://github.com/Gkrumbach07/spec-kit-template.git",
   "branch": "main",
-  "path": ""
+  "path": "workflows/spec-kit"
 }
 ```
 
@@ -103,15 +108,15 @@ When a workflow is activated, your session workspace is organized as:
 ```
 /workspace/sessions/{session-name}/
 ├── workflows/
-│   ├── default/              # Empty unless workflow selected
-│   └── spec-kit-template/    # Active workflow (when selected)
-│       ├── .specify/
-│       └── .claude/
-└── artifacts/                # Output directory for generated files
-    ├── spec/                # Generated specifications
-    ├── plans/               # Implementation plans
-    ├── tasks/               # Task breakdowns
-    └── implementation/      # Code and artifacts
+│   ├── default/           # Empty unless workflow selected
+│   └── spec-kit/          # Active workflow (when selected)
+│       ├── .specify/      # Scripts, templates, memory
+│       └── .claude/       # Agents and commands
+└── artifacts/             # Output directory for generated files
+    ├── spec/             # Generated specifications
+    ├── plans/            # Implementation plans
+    ├── tasks/            # Task breakdowns
+    └── implementation/   # Code and artifacts
 ```
 
 **Key Concepts:**
@@ -179,9 +184,10 @@ git push -u origin main
 
 Load it in vTeam:
 1. Select "Custom Workflow..." in the UI
-2. Enter: `https://github.com/your-org/my-custom-workflow.git`
+2. Enter Git URL: `https://github.com/your-org/my-custom-workflow.git`
 3. Branch: `main`
-4. Click "Load Workflow"
+4. Path: (leave empty if workflow is at repo root)
+5. Click "Load Workflow"
 
 ## Workflow Development Guide
 
@@ -241,6 +247,74 @@ Instructions for this section...
 Instructions for this section...
 ```
 
+## Configuration
+
+### Environment Variables
+
+The vTeam backend supports configuring OOTB workflows via environment variables. This allows organizations to fork and customize workflows without changing code.
+
+**Spec Kit Workflow:**
+- `OOTB_SPEC_KIT_REPO` - Git repository URL (default: `https://github.com/Gkrumbach07/spec-kit-template.git`)
+- `OOTB_SPEC_KIT_BRANCH` - Branch to use (default: `main`)
+- `OOTB_SPEC_KIT_PATH` - Path within repository (default: `workflows/spec-kit`)
+
+**Bug Fix Workflow:**
+- `OOTB_BUG_FIX_REPO` - Git repository URL (required to enable)
+- `OOTB_BUG_FIX_BRANCH` - Branch to use (default: `main`)
+- `OOTB_BUG_FIX_PATH` - Path within repository (optional)
+
+**Example Deployment:**
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+spec:
+  template:
+    spec:
+      containers:
+      - name: backend
+        env:
+        - name: OOTB_SPEC_KIT_REPO
+          value: "https://github.com/your-org/custom-spec-kit.git"
+        - name: OOTB_SPEC_KIT_BRANCH
+          value: "production"
+```
+
+### Backend API
+
+The backend provides a public endpoint to list available OOTB workflows:
+
+```bash
+GET /api/workflows/ootb
+
+Response:
+{
+  "workflows": [
+    {
+      "id": "spec-kit",
+      "name": "Spec Kit Workflow",
+      "description": "Comprehensive workflow for planning and implementing features...",
+      "gitUrl": "https://github.com/Gkrumbach07/spec-kit-template.git",
+      "branch": "main",
+      "path": "workflows/spec-kit",
+      "enabled": true
+    },
+    {
+      "id": "bug-fix",
+      "name": "Bug Fix Workflow",
+      "description": "Streamlined workflow for bug triage...",
+      "gitUrl": "",
+      "branch": "main",
+      "path": "",
+      "enabled": false
+    }
+  ]
+}
+```
+
+The frontend automatically fetches and displays configured workflows.
+
 ## Troubleshooting
 
 ### Workflow Not Cloning
@@ -274,8 +348,8 @@ To contribute a new OOTB workflow:
 ## Support
 
 - **Documentation**: [vTeam User Guide](https://ambient-code.github.io/vteam)
-- **Issues**: [GitHub Issues](https://github.com/ambient-code/ootb-workflow-templates/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/ambient-code/ootb-workflow-templates/discussions)
+- **Issues**: [GitHub Issues](https://github.com/Gkrumbach07/spec-kit-template/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/Gkrumbach07/spec-kit-template/discussions)
 
 ## License
 
@@ -283,7 +357,7 @@ This repository and all OOTB workflows are provided under the MIT License. See L
 
 ---
 
-**Repository:** `ambient-code/ootb-workflow-templates`  
-**Default Workflow:** Spec Kit Template  
+**Repository:** [Gkrumbach07/spec-kit-template](https://github.com/Gkrumbach07/spec-kit-template)  
+**Default Workflow:** Spec Kit (`workflows/spec-kit`)  
 **Platform:** Ambient Code Platform (vTeam)
 
