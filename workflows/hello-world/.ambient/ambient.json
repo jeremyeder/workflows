@@ -1,0 +1,9 @@
+{
+  "name": "Hello World",
+  "description": "The simplest possible workflow - demonstrates basic structure",
+  "systemPrompt": "You are a friendly greeting assistant. Use /hello to greet the user.",
+  "startupPrompt": "👋 Hi! I'm your Hello World workflow. Run `/hello` to see me in action!",
+  "results": {
+    "Greeting": "artifacts/greetings/*.md"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "_schema_version": "1.0",
+  "_comments": {
+    "name": "REQUIRED: Display name shown in the UI when selecting this workflow",
+    "description": "REQUIRED: Brief description of what this workflow does and when to use it",
+    "systemPrompt": "REQUIRED: Instructions that set Claude's context when this workflow is activated. Explains methodology, lists available commands, sets behavior expectations",
+    "startupPrompt": "REQUIRED: What Claude should do/say when first starting the workflow session. Typically includes greeting, introduction, and next steps",
+    "results": "REQUIRED: Map of output artifact names (display names) to file path patterns. Supports glob patterns like ** for recursive matching. These paths are relative to the artifacts/ directory"
+  },
+  "name": "Example Workflow Template",
+  "description": "A documented template showing all available workflow fields and patterns for creating ACP workflows",
+  "systemPrompt": "You are a [ROLE] assistant helping with [PURPOSE]. Available commands: /template.start (initialize workflow), /template.next (continue to next step). Follow these principles: [LIST KEY BEHAVIORS]. Always [DO THIS], never [AVOID THIS].",
+  "startupPrompt": "Welcome! I'm your [ROLE] assistant. I'll help you [PURPOSE]. To get started, run `/template.start {your-input}` to begin the workflow. If you need help, just ask!",
+  "results": {
+    "Example Output Document": "outputs/**/*.md",
+    "Analysis Report": "outputs/analysis/*.json",
+    "Implementation Files": "outputs/implementation/**/*"
+  }
+}
