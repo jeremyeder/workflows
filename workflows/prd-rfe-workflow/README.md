@@ -6,6 +6,11 @@ A comprehensive workflow for creating Product Requirements Documents (PRDs) and 
 
 ```mermaid
 flowchart LR
+    GD[(Google Drive)] -.-> A
+    UXR[(UXR MCP)] -.-> A
+    UF[(User-uploaded files)] -.-> A
+    CODE[(Code)] -.-> A
+    
     A[prd.discover] --> review_loop
     
     subgraph review_loop["PRD Review Loop"]
@@ -22,9 +27,16 @@ flowchart LR
     
     review_loop --> rfe_loop
     rfe_loop --> H[rfe.submit]
+    H -.-> JIRA[Jira]
+    
+    style GD fill:#999,stroke:#666,color:#fff
+    style UXR fill:#999,stroke:#666,color:#fff
+    style UF fill:#999,stroke:#666,color:#fff
+    style CODE fill:#999,stroke:#666,color:#fff
+    style JIRA fill:#999,stroke:#666,color:#fff
 ```
 
-## Workflow Steps & Collaborators
+## Workflow Steps & Agent Collaborators
 
 ### 1. `prd.discover` - Product Discovery
 **Purpose**: Understand the problem space, user needs, and market opportunity. Coordinate with adjacent products that may exist or are in development.
@@ -237,49 +249,6 @@ Workflow: Jump to /rfe.breakdown to decompose into RFEs
 
 Agent collaboration is automatically triggered when you use the workflow commands—specialized agents are orchestrated as needed to ensure high-quality product documentation. Additionally, you can bring any individual agent into a conversation at any point by typing the '@' symbol and selecting an agent by name.
 
-
-## Best Practices
-
-### Discovery
-- Focus on understanding the problem before jumping to solutions
-- Validate assumptions with user research and data
-- Document what you don't know
-- Identify risks and constraints early
-
-### Requirements
-- Make every requirement testable and measurable
-- Use clear, unambiguous language
-- Define acceptance criteria upfront
-- Document assumptions and dependencies
-- Clearly define what's in scope and out of scope
-
-### PRD Creation
-- Write for your audience (executives, stakeholders, technical teams)
-- Focus on WHAT and WHY, not HOW
-- Use measurable success metrics
-- Include visual aids (tables, diagrams) where helpful
-- Keep technical implementation details out of the PRD
-
-### RFE Breakdown
-- Each RFE should be independently valuable and deliverable
-- Size RFEs appropriately (not too large, not too small)
-- Define clear acceptance criteria for every RFE
-- Ensure traceability back to PRD requirements
-- Identify and document dependencies clearly
-
-### Prioritization
-- Prioritize based on business value and user impact
-- Consider dependencies and risks
-- Each roadmap phase should deliver cohesive value
-- Be transparent about trade-offs and what's deferred
-- Align priorities with business goals
-
-### Review
-- Check traceability from PRD to RFEs
-- Validate completeness and quality
-- Look for gaps, contradictions, and ambiguities
-- Ensure documentation is stakeholder-ready
-- Address critical issues before implementation
 
 ## Customization
 
