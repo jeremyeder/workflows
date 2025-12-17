@@ -8,7 +8,6 @@ This workflow provides a structured approach to product requirements and feature
 - **Discovery-Driven Process**: Six-phase methodology from discovery to prioritization
 - **Requirements Excellence**: Emphasizes clear, testable, and measurable requirements
 - **Structured Breakdown**: Systematic decomposition of PRDs into implementable RFEs
-- **Prioritization Frameworks**: Multiple methods (MoSCoW, RICE, Value vs Effort)
 - **Agent Collaboration**: Leverages specialized product and technical agents
 
 ## Workflow Diagram
@@ -32,6 +31,143 @@ flowchart LR
     review_loop --> rfe_loop
     rfe_loop --> H[rfe.submit]
 ```
+
+## Workflow Steps & Collaborators
+
+### 1. `prd.discover` - Product Discovery
+**Purpose**: Understand the problem space, user needs, and market opportunity. Coordinate with adjacent products that may exist or are in development.
+
+**Collaborating Agents**:
+- **@parker-product_manager.md** - Market strategy, competitive analysis, opportunity quantification
+- **@ryan-ux_researcher.md** - User insights from research studies, evidence-based requirements (CRITICAL: grounds requirements in available research from "All UXR Reports" folder)
+- **@aria-ux_architect.md** (bullpen) - User journey mapping, ecosystem-level UX strategy
+
+**Key Actions**:
+- Define problem statement and business goals
+- Collect source materials such as notes and links to related code repositories
+- Research user pain points with data from existing studies
+- Analyze competitive landscape and market opportunity
+- Document assumptions and success metrics
+
+---
+
+### 2. `prd.create` - PRD Creation
+**Purpose**: Create a comprehensive Product Requirements Document
+
+**Collaborating Agents**:
+- **@parker-product_manager.md** - Business requirements, value proposition, ROI justification
+- **@ryan-ux_researcher.md** - Research-informed requirements with citations from studies
+- **@terry-technical_writer.md** - Documentation quality, clarity, and structure
+- **@casey-content_strategist.md** (bullpen) - Content architecture and standards
+
+**Key Actions**:
+- Write executive summary and product vision
+- Document goals, success metrics, and KPIs
+- Define user stories with research backing
+- Specify functional and non-functional requirements
+
+---
+
+### 3. `prd.review` - PRD Review
+**Purpose**: Review PRD for quality, completeness, and feasibility; determine if prototyping is needed
+
+**Collaborating Agents**:
+- **@steve-ux_designer.md** - UX assessment, determine if prototype needed for validation
+- **@aria-ux_architect.md** (bullpen) - Holistic UX strategy validation, journey alignment
+- **@olivia-product_owner.md** (bullpen) - Story readiness, acceptance criteria validation
+- **@archie-architect.md** (bullpen) - Technical feasibility, architecture alignment
+
+**Key Actions**:
+- Validate requirements are clear and testable
+- Assess if prototype is needed for user validation
+- Check technical feasibility and architecture fit
+- Ensure documentation meets quality standards
+
+---
+
+### 4. `prd.revise` - PRD Revision
+**Purpose**: Revise PRD based on review feedback
+
+**Recommended Agents**:
+- **@parker-product_manager.md** - Business value adjustments, strategic refinements
+- **@terry-technical_writer.md** - Clarity improvements, documentation structure
+- **@casey-content_strategist.md** (bullpen) - Content structure and taxonomy refinements
+- **@ryan-ux_researcher.md** - Add missing research citations, strengthen evidence base
+
+**Key Actions**:
+- Address review feedback and gaps
+- Strengthen requirements with additional research
+- Improve clarity and structure
+- Validate all acceptance criteria are testable
+
+---
+
+### 5. `prd.breakdown` - RFE Breakdown
+**Purpose**: Break down PRD into actionable Request for Enhancement items
+
+**Recommended Agents**:
+- **@olivia-product_owner.md** (bullpen) - Backlog management, story decomposition, acceptance criteria
+- **@stella-staff_engineer.md** - Technical scoping, effort estimation, complexity assessment
+- **@archie-architect.md** (bullpen) - System design, dependencies, architectural coordination
+- **@neil-test_engineer.md** (bullpen) - Testability assessment, automation requirements, cross-component impact
+
+**Key Actions**:
+- Decompose PRD into implementable RFEs
+- Define clear acceptance criteria for each RFE
+- Identify technical dependencies and risks
+- Size RFEs and assess testing requirements
+
+---
+
+### 6. `rfe.review` - RFE Review
+**Purpose**: Review RFEs for technical feasibility, testability, and team capacity
+
+**Recommended Agents**:
+- **@stella-staff_engineer.md** - Technical feasibility, implementation complexity, risk assessment
+- **@archie-architect.md** (bullpen) - Architecture alignment, system-level implications
+- **@neil-test_engineer.md** (bullpen) - Testing requirements, automation strategy, cross-team impact
+- **@emma-engineering_manager.md** (bullpen) - Team capacity planning, delivery coordination
+- **@olivia-product_owner.md** (bullpen) - Acceptance criteria validation, scope negotiation
+
+**Key Actions**:
+- Validate technical approach and feasibility
+- Assess testability and automation requirements
+- Check team capacity and delivery timeline
+- Ensure architecture alignment
+
+---
+
+### 7. `rfe.revise` - RFE Revision
+**Purpose**: Revise RFEs based on technical and capacity feedback
+
+**Recommended Agents**:
+- **@olivia-product_owner.md** (bullpen) - Story refinement, scope adjustments
+- **@stella-staff_engineer.md** - Technical design adjustments, complexity reduction
+- **@neil-test_engineer.md** (bullpen) - Test requirements clarification, testability improvements
+
+**Key Actions**:
+- Address technical concerns and risks
+- Refine acceptance criteria for clarity
+- Adjust scope based on capacity constraints
+- Enhance testability of requirements
+
+---
+
+### 8. `rfe.submit` - RFE Submission
+**Purpose**: Submit approved RFEs for implementation planning and team assignment
+
+**Recommended Agents**:
+- **@olivia-product_owner.md** (bullpen) - Backlog prioritization, sprint planning
+- **@emma-engineering_manager.md** (bullpen) - Team assignment, capacity allocation, delivery coordination
+- **@parker-product_manager.md** - Roadmap alignment, stakeholder communication
+
+**Key Actions**:
+- Prioritize RFEs in backlog
+- Assign to appropriate teams
+- Align with product roadmap
+- Communicate to stakeholders
+
+---
 
 ## What's Included
 
