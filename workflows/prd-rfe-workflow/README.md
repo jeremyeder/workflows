@@ -29,6 +29,12 @@ flowchart LR
 ### 1. `prd.discover` - Product Discovery
 **Purpose**: Understand the problem space, user needs, and market opportunity. Coordinate with adjacent products that may exist or are in development.
 
+**Data Connections**:
+- **Google Drive** - Access to user's product documents, stakeholder notes, and related assets.
+- **UXR MCP** - Aggregates and provides structured access to all available user research reports, findings, and actionable insights relevant to the problem space.
+- **User-uploaded files** - Allows team members to directly upload supporting materials.
+- **Code** - Access to relevant code repositories.
+
 **Collaborating Agents**:
 - **@parker-product_manager.md** - Market strategy, competitive analysis, opportunity quantification
 - **@ryan-ux_researcher.md** - User insights from research studies, evidence-based requirements (CRITICAL: grounds requirements in available research from "All UXR Reports" folder)
