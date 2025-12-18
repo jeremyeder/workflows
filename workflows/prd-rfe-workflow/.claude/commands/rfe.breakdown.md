@@ -125,8 +125,10 @@ This command breaks down the PRD into discrete RFE items. It should be run after
    ```
 
 4. **Generate Individual RFE Documents**:
-   - Create `artifacts/rfe-tasks/` directory
-   - For each RFE, create `artifacts/rfe-tasks/RFE-XXX-[slug].md`:
+   - Create `artifacts/rfe-tasks/` directory (if it doesn't exist)
+   - **IMPORTANT**: Create individual RFE files for ALL RFEs identified in the master list, not just a sample
+   - **TEMPLATE**: Use the Red Hat RFE format template at `.claude/templates/rfe-template.md` as a guide
+   - For EACH RFE in the breakdown, create `artifacts/rfe-tasks/RFE-XXX-[slug].md` following the template structure:
 
    ```markdown
    # RFE-XXX: [Title]
@@ -137,23 +139,71 @@ This command breaks down the PRD into discrete RFE items. It should be run after
    **Created**: [Date]
    **PRD Reference**: [Link to prd.md section]
 
-   ## Overview
+   ## Summary
 
-   [Description of what this RFE delivers]
+   [One to three sentences describing the enhancement. Should clearly state what is being extended, added, or modified, and who benefits from this change. Focus on the value delivered.]
 
-   ## Related User Stories
+   ## Background
 
-   - [User Story 1 from PRD]
-   - [User Story 2 from PRD]
+   [Describe the current state of the system/feature. Explain what exists today and what limitations or gaps exist. Reference any relevant existing functionality.]
 
-   ## Requirements
+   ### Current State
+   - [Current feature/component description]
+   - [What information/functionality is currently available]
 
-   ### Functional Requirements
-   - FR-XXX: [Requirement from PRD]
-   - FR-YYY: [Requirement from PRD]
+   ### Gaps and Limitations
+   - [What is missing or insufficient]
+   - [What users cannot currently see/do]
+   - [Pain points with current implementation]
 
-   ### Non-Functional Requirements
-   - NFR-XXX: [Performance, security, etc.]
+   ## Problem Statement
+
+   [Clearly articulate the problem(s) this RFE addresses. Focus on user pain points and business impact. Use specific, measurable language when possible.]
+
+   [Target User Persona] needs [capability/visibility/functionality] because [reason/impact]. The current [system/UI/feature] provides no indication of:
+
+   - [Problem 1]: [Description]
+   - [Problem 2]: [Description]
+
+   ## Proposed Solution
+
+   ### Core Requirements
+
+   [High-level requirements that must be met. Focus on WHAT needs to be delivered, not HOW.]
+
+   1. **Requirement 1**: [Description]
+   2. **Requirement 2**: [Description]
+
+   ### UI/UX Enhancements
+
+   [If this RFE involves user interface changes, describe the enhancements in detail.]
+
+   #### New Components/Columns/Views
+   - **[Component Name]**: [Description]
+
+   #### Status Indicators
+   [If applicable, define status indicators and their meanings]
+
+   ### Technical Approach (High-Level)
+
+   [Brief technical overview - can be refined during implementation]
+
+   #### Integration Points
+   - [System/Component 1]: [How it integrates]
+
+   #### Data Considerations
+   - [Data models or migrations needed]
+
+   ## User Stories
+
+   [Organize user stories by persona or role. Use the standard format: "As a [persona], I want [goal] so that [benefit]."]
+
+   ### As a [Persona 1]
+   - I want to [action] so that [benefit]
+   - I want to [action] so that [benefit]
+
+   ### As a [Persona 2]
+   - I want to [action] so that [benefit]
 
    ## Acceptance Criteria
 
@@ -202,10 +252,22 @@ This command breaks down the PRD into discrete RFE items. It should be run after
    ### E2E/Acceptance Tests
    - [End-to-end scenarios matching acceptance criteria]
 
+   ## Success Criteria
+
+   [Measurable outcomes that indicate this RFE has achieved its goals. Should align with the problem statement and user stories.]
+
+   - **Visibility**: [What users can now see/understand]
+   - **Performance**: [Performance requirements or improvements]
+   - **Usability**: [Usability goals or improvements]
+   - **Scalability**: [How the solution handles scale]
+   - **Integration**: [How well it integrates with existing systems]
+
    ## Success Metrics
 
-   - [Metric 1]: [Target]
-   - [Metric 2]: [Target]
+   [Quantifiable metrics that will be tracked to measure success]
+
+   - **[Metric 1]**: [Target value] - [How it's measured]
+   - **[Metric 2]**: [Target value] - [How it's measured]
 
    ## Implementation Notes
 
@@ -221,6 +283,8 @@ This command breaks down the PRD into discrete RFE items. It should be run after
    |------|--------|------------|
    | [Risk 1] | [High/Med/Low] | [How to address] |
    ```
+
+   **CRITICAL**: You MUST create individual RFE files for EVERY RFE identified in the master list. Do not create only a sample file. Each RFE from the master list must have its own corresponding file in the `artifacts/rfe-tasks/` directory.
 
 5. **RFE Breakdown Principles**:
    - **Atomic**: Each RFE should be independently deliverable
@@ -242,19 +306,25 @@ This command breaks down the PRD into discrete RFE items. It should be run after
    - Dependencies are acyclic (no circular dependencies)
    - Each RFE has clear acceptance criteria
    - Priorities align with business goals
+   - **VERIFY**: Every RFE in the master list has a corresponding individual file in `artifacts/rfe-tasks/`
 
 8. **Report Completion**:
-   - Path to RFE master list
+   - Path to RFE master list (`artifacts/rfes.md`)
+   - Path to individual RFE files directory (`artifacts/rfe-tasks/`)
    - Count of RFEs by priority and size
    - Total estimated effort
    - Dependency summary
+   - Confirmation that ALL individual RFE files have been created (not just a sample)
    - Next step: run `/rfe.prioritize`
 
 ## Guidelines
 
+- **Use the Red Hat RFE Template**: Reference `.claude/templates/rfe-template.md` when creating individual RFE files to ensure consistency with Red Hat's RFE format
 - Break down by value delivery, not technical layers
 - Each RFE should deliver something testable
 - Consider dependencies when creating RFEs
 - Keep RFEs focused and scoped
 - Include both functional and testing requirements
 - Make acceptance criteria specific and measurable
+- Follow the template structure: Summary → Background → Problem Statement → Proposed Solution → User Stories → Acceptance Criteria → Success Criteria
+- Adapt template sections as needed - not all sections are required for every RFE, but maintain the overall structure
