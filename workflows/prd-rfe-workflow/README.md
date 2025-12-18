@@ -2,6 +2,10 @@
 
 A comprehensive workflow for creating Product Requirements Documents (PRDs) and systematically breaking them down into actionable Request for Enhancement (RFE) items. 
 
+## Who this workflow is for
+
+This workflow is designed for Product Managers who want to leverage agents in the creation of comprehensive, well-defined, data-informed PRDs and RFEs. The goal is to generate PRDs and RFEs that are more likely to be accepted by a Senior Engineer or Architect for implementation.
+
 ## Workflow
 
 ```mermaid
@@ -20,7 +24,7 @@ flowchart LR
     end
     
     subgraph rfe_loop["RFE Review Loop"]
-        E[prd.breakdown] --> F[rfe.review]
+        E[rfe.breakdown] --> F[rfe.review]
         F --> G[rfe.revise]
         G --> E
     end
@@ -110,7 +114,7 @@ flowchart LR
 
 ---
 
-### 5. `prd.breakdown` - RFE Breakdown
+### 5. `rfe.breakdown` - RFE Breakdown
 **Purpose**: Break down PRD into actionable Request for Enhancement items
 
 **Recommended Agents**:

@@ -14,7 +14,7 @@ flowchart LR
     end
     
     subgraph rfe_loop["RFE Review Loop"]
-        E[prd.breakdown] --> F[rfe.review]
+        E[rfe.breakdown] --> F[rfe.review]
         F --> G[rfe.revise]
         G --> E
     end
