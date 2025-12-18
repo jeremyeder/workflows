@@ -21,7 +21,8 @@ flowchart LR
     end
     
     review_loop --> rfe_loop
-    rfe_loop --> H[rfe.submit]
+    rfe_loop --> PRIO[rfe.prioritize]
+    PRIO --> H[rfe.submit]
     H -.-> JIRA[Jira]
     
     style GD fill:#999,stroke:#666,color:#fff

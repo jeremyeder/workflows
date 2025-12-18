@@ -8,7 +8,7 @@ A comprehensive workflow for creating Product Requirements Documents (PRDs) and 
 
 ## Workflow
 
-The creation of a PRD and subsequent refinements of RFEs associated with that PRD follow a general workflow that starts with discovery, goes through two refinement loops, and utimately exports RFE definitions to Jira. The workflow is accessible through commands (ex. prd.create) which enable the user to keep the agents on track. Some commands have prerequisites. For example `/rfe.breakdown` which breaks a PRD down into RFEs, requires the existance of a PRD document. 
+The creation of a PRD and subsequent refinements of RFEs associated with that PRD follow a general workflow that starts with discovery, goes through two refinement loops, and utimately exports RFE definitions to Jira. 
 
 ```mermaid
 flowchart LR
@@ -33,7 +33,8 @@ flowchart LR
     end
     
     review_loop --> rfe_loop
-    rfe_loop --> H[rfe.submit]
+    rfe_loop --> PRIO[rfe.prioritize]
+    PRIO --> H[rfe.submit]
     H -.-> JIRA[Jira]
     
     style GD fill:#999,stroke:#666,color:#fff
@@ -43,10 +44,25 @@ flowchart LR
     style JIRA fill:#999,stroke:#666,color:#fff
 ```
 
-## Workflow Steps & Agent Collaborators
+### Slash Commands
 
-### 1. `prd.discover` - Product Discovery
-**Purpose**: Understand the problem space, user needs, and market opportunity. Coordinate with adjacent products that may exist or are in development.
+The workflow is accessible through slash commands which enable the user to keep the agents on track. Some commands have prerequisites. For example `/rfe.breakdown` which breaks a PRD down into RFEs, requires the existance of a PRD document. 
+
+1. [`prd.discover`](#1-prddiscover---product-discovery) - Product discovery
+2. [`prd.requirements`](#2-prdrequirements---requirements-gathering) - Define precise requirements
+3. [`prd.create`](#3-prdcreate---prd-creation) - Draft or update PRD
+4. [`prd.review`](#4-prdreview---prd-review) - PRD review by senior engineer and architect agents.
+5. [`prd.revise`](#5-prdrevise---prd-revision) - Revise PRD based on feedback or new data
+6. [`rfe.breakdown`](#6-rfebreakdown---rfe-breakdown) - Breakdown a PRD into scoped RFEs
+7. [`rfe.review`](#7-rfereview---rfe-review) - Individual RFE review by senior engineer and architect agents.
+8. [`rfe.revise`](#8-rferevise---rfe-revision) - RFE Revision
+9. [`rfe.prioritize`](#9-rfeprioritize---rfe-prioritization) - Prioritize RFEs and create implementation roadmap
+10. [`rfe.submit`](#10-rfesubmit---rfe-submission) - RFE formatting and submission to Jira
+
+---
+
+### 1. `prd.discover`
+**Purpose**: Product discovery
 
 **Data Connections**:
 - **Google Drive** - Access to user's product documents, stakeholder notes, and related assets.
@@ -66,10 +82,13 @@ flowchart LR
 - Analyze competitive landscape and market opportunity
 - Document assumptions and success metrics
 
+**Artifacts Created**:
+- `artifacts/discovery.md` - Product discovery document with problem statement, user research, market analysis, and proposed solutions
+
 ---
 
-### 2. `prd.requirements` - Requirements Gathering
-**Purpose**: Gather and document detailed product requirements based on discovery findings
+### 2. `prd.requirements`
+**Purpose**: Define precise requirements
 
 **Collaborating Agents**:
 - **@parker-product_manager.md** - Business requirements, success criteria, constraints, and prioritization
@@ -85,10 +104,13 @@ flowchart LR
 - Document constraints, dependencies, and assumptions
 - Clearly define scope and out-of-scope items
 
+**Artifacts Created**:
+- `artifacts/requirements.md` - Detailed product requirements document with business requirements, user stories, functional and non-functional requirements
+
 ---
 
-### 3. `prd.create` - PRD Creation
-**Purpose**: Create a comprehensive Product Requirements Document
+### 3. `prd.create`
+**Purpose**: Draft or update PRD
 
 **Collaborating Agents**:
 - **@parker-product_manager.md** - Business requirements, value proposition, ROI justification
@@ -102,10 +124,14 @@ flowchart LR
 - Define user stories with research backing
 - Specify functional and non-functional requirements
 
+**Artifacts Created**:
+- `artifacts/prd.md` - Comprehensive Product Requirements Document
+- `artifacts/prd-checklist.md` - PRD quality checklist for validation
+
 ---
 
-### 4. `prd.review` - PRD Review
-**Purpose**: Review PRD for quality, completeness, and feasibility; determine if prototyping is needed
+### 4. `prd.review`
+**Purpose**: PRD review by senior engineer and architect agents.
 
 **Collaborating Agents**:
 - **@steve-ux_designer.md** - UX assessment, determine if prototype needed for validation
@@ -119,10 +145,13 @@ flowchart LR
 - Check technical feasibility and architecture fit
 - Ensure documentation meets quality standards
 
+**Artifacts Created**:
+- `artifacts/prd-review-report.md` - PRD completeness review report with quality assessment and recommendations
+
 ---
 
-### 5. `prd.revise` - PRD Revision
-**Purpose**: Revise PRD based on review feedback
+### 5. `prd.revise`
+**Purpose**: Revise PRD based on feedback or new data
 
 **Collaborating Agents**:
 - **@parker-product_manager.md** - Business value adjustments, strategic refinements
@@ -134,10 +163,13 @@ flowchart LR
 - Improve clarity and structure
 - Validate all acceptance criteria are testable
 
+**Artifacts Created**:
+- Updates to `artifacts/prd.md` - Revised PRD based on review feedback
+
 ---
 
-### 6. `rfe.breakdown` - RFE Breakdown
-**Purpose**: Break down PRD into actionable Request for Enhancement items
+### 6. `rfe.breakdown`
+**Purpose**: Breakdown a PRD into scoped RFEs
 
 **Collaborating Agents**:
 - **@olivia-product_owner.md** (bullpen) - Backlog management, story decomposition, acceptance criteria
@@ -151,10 +183,15 @@ flowchart LR
 - Identify technical dependencies and risks
 - Size RFEs and assess testing requirements
 
+**Artifacts Created**:
+- `artifacts/rfes.md` - RFE master list with overview, summary, and detailed RFE descriptions
+- `artifacts/rfe-tasks/` - Directory containing individual RFE files
+  - `RFE-001-[slug].md`, `RFE-002-[slug].md`, etc. - Individual RFE documents following Red Hat RFE format
+
 ---
 
-### 7. `rfe.review` - RFE Review
-**Purpose**: Review RFEs for technical feasibility, testability, and team capacity
+### 7. `rfe.review`
+**Purpose**: Individual RFE review by senior engineer and architect agents.
 
 **Collaborating Agents**:
 - **@stella-staff_engineer.md** - Technical feasibility, implementation complexity, risk assessment
@@ -169,10 +206,13 @@ flowchart LR
 - Check team capacity and delivery timeline
 - Ensure architecture alignment
 
+**Artifacts Created**:
+- RFE review feedback and recommendations (may update individual RFE files in `artifacts/rfe-tasks/`)
+
 ---
 
-### 8. `rfe.revise` - RFE Revision
-**Purpose**: Revise RFEs based on technical and capacity feedback
+### 8. `rfe.revise`
+**Purpose**: RFE Revision
 
 **Collaborating Agents**:
 - **@olivia-product_owner.md** (bullpen) - Story refinement, scope adjustments
@@ -185,10 +225,36 @@ flowchart LR
 - Adjust scope based on capacity constraints
 - Enhance testability of requirements
 
+**Artifacts Created**:
+- Updates to individual RFE files in `artifacts/rfe-tasks/` - Revised RFEs based on review feedback
+
 ---
 
-### 9. `rfe.submit` - RFE Submission
-**Purpose**: Submit approved RFEs to Jira for implementation planning and team assignment
+### 9. `rfe.prioritize`
+**Purpose**: Prioritize RFEs using various frameworks and create an implementation roadmap
+
+**Collaborating Agents**:
+- **@parker-product_manager.md** - RICE scoring, business value assessment, ROI analysis, market strategy alignment
+- **@olivia-product_owner.md** (bullpen) - Backlog prioritization, MoSCoW categorization, value vs effort analysis
+- **@emma-engineering_manager.md** (bullpen) - Team capacity considerations, resource constraints, delivery timeline planning
+
+**Key Actions**:
+- Apply prioritization frameworks (MoSCoW, RICE, Value vs Effort, Kano Model)
+- Score and rank RFEs based on business value and user impact
+- Create implementation roadmap with phases/releases
+- Define dependency-driven sequence
+- Perform risk-adjusted prioritization
+- Map RFEs to business goals and user needs
+- Generate recommendations for implementation order
+
+**Artifacts Created**:
+- `artifacts/prioritization.md` - Prioritization analysis and implementation roadmap
+- `artifacts/roadmap-visual.md` - Visual roadmap (optional)
+
+---
+
+### 10. `rfe.submit`
+**Purpose**: RFE formatting and submission to Jira
 
 **Data Connections**:
 - **Jira MCP** - When available, automatically creates Jira tickets from RFE files with proper field mapping, dependencies, and attachments
@@ -212,77 +278,16 @@ flowchart LR
 - Assign to appropriate teams
 - Align with product roadmap
 
----
+**Artifacts Created**:
+- `artifacts/jira-tickets.md` - Jira ticket mapping document with RFE ID to Jira ticket key mappings (when Jira MCP is available)
 
-## Artifacts Generated
 
-All workflow artifacts are organized in the `artifacts/` directory:
+## Quick Start
+todo: add quickstart
 
-```
-artifacts/
-├── discovery.md                  # Product discovery document
-├── requirements.md               # Detailed requirements
-├── prd.md                        # Product Requirements Document
-├── prd-checklist.md              # PRD quality checklist
-├── rfes.md                       # RFE master list
-├── rfe-tasks/                    # Individual RFE documents
-│   ├── RFE-001-feature-name.md
-│   ├── RFE-002-feature-name.md
-│   └── ...
-├── prioritization.md             # Prioritization and roadmap (optional)
-├── roadmap-visual.md             # Visual roadmap (optional)
-├── review-report.md              # Quality review report
-└── jira-tickets.md               # Jira ticket mapping (created by rfe.submit)
-```
-
-## Getting Started
-
-### Quick Start
-
-1. **Create an AgenticSession** in the Ambient Code Platform
-2. **Select "PRD & RFE Creation"** from the workflows dropdown
-3. **Start with `/prd.discover`** to begin product discovery
-4. **Follow the phases** sequentially or jump to any phase based on your context
-
-### Example Usage
-
-**Scenario 1: New product idea**
-```
-User: "We want to add a user analytics dashboard to help users track their usage patterns"
-
-Workflow: /prd.discover to understand the problem and opportunity
-→ /prd.requirements to gather detailed requirements
-→ /prd.create to generate comprehensive PRD
-→ /rfe.breakdown to create implementable RFEs
-→ /rfe.prioritize to plan implementation roadmap
-→ /review to validate quality
-```
-
-**Scenario 2: You already have requirements**
-```
-User: "I have detailed requirements for a new reporting feature"
-
-Workflow: Jump to /prd.create to generate PRD
-→ /rfe.breakdown to create RFEs
-→ /rfe.prioritize to plan roadmap
-→ /review to validate
-```
-
-**Scenario 3: You have a PRD and need RFEs**
-```
-User: "I have a complete PRD for our mobile app redesign and need to break it into RFEs"
-
-Workflow: Jump to /rfe.breakdown to decompose into RFEs
-→ /rfe.prioritize to plan implementation
-→ /review to validate coverage
-```
 
 ### Prerequisites
-
-- Clear understanding of the problem or product opportunity
-- Access to user research, market data, or competitive analysis (helpful but not required)
-- Stakeholder alignment on business goals and success metrics
-- Understanding of technical constraints and dependencies (for RFE breakdown)
+todo: add prerequisites
 
 ## Agent Orchestration
 
@@ -302,25 +307,6 @@ You can customize this workflow by:
 5. **Extending phases** with additional validation steps
 6. **Customizing artifact paths** to match your document management system
 
-### Industry-Specific Adjustments
-
-Adjust the workflow for different industries:
-
-- **SaaS**: Add subscription metrics and user onboarding considerations
-- **Enterprise**: Include compliance, security, and governance requirements
-- **Mobile Apps**: Add app store requirements and device compatibility
-- **Healthcare**: Include HIPAA and regulatory compliance
-- **Financial Services**: Add security, audit, and compliance sections
-
-## Integration with ACP
-
-This workflow integrates seamlessly with the Ambient Code Platform:
-
-- **Workflow Selection**: Choose "PRD & RFE Creation" when creating AgenticSession
-- **Artifact Management**: All outputs saved to `artifacts/` directory
-- **Agent Invocation**: Automatically suggests agents based on phase and complexity
-- **Progressive Disclosure**: Jump to any phase based on your context
-- **Version Control**: All artifacts are plain markdown for easy versioning
 
 ## Contributing
 

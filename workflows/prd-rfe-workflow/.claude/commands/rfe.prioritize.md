@@ -16,6 +16,16 @@ You **MUST** consider the user input before proceeding (if not empty).
 
 This command helps prioritize RFEs and creates an implementation roadmap. It should be run after `/rfe.breakdown`.
 
+**IMPORTANT: Agent Collaboration**
+
+You MUST proactively invoke the following collaborating agents to ensure comprehensive RFE prioritization:
+
+1. **@parker-product_manager.md** - For RICE scoring, business value assessment, ROI analysis, and market strategy alignment
+2. **@olivia-product_owner.md** (from bullpen) - For backlog prioritization, MoSCoW categorization, and value vs effort analysis
+3. **@emma-engineering_manager.md** (from bullpen) - For team capacity considerations, resource constraints, and delivery timeline planning
+
+Invoke these agents at the start of the prioritization process. Work collaboratively with them to apply prioritization frameworks, assess business value, and create a realistic implementation roadmap.
+
 1. **Load Context**:
    - Read `artifacts/rfes.md`
    - Read `artifacts/prd.md` for business goals and success metrics
