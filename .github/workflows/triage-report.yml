@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
     inputs:
       repository:
-        description: 'Repository to triage (e.g., owner/repo or kubeflow/notebooks)'
+        description: 'Repository to triage (e.g., owner/repo or opendatahub-io/opendatahub-operator)'
         required: false
         default: ''
 
