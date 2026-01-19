@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
     inputs:
       repository:
-        description: 'Repository to triage (owner/repo format)'
+        description: 'Repository to triage (e.g., owner/repo or kubeflow/notebooks)'
         required: false
         default: ''
 
@@ -28,10 +28,29 @@ jobs:
       - name: Set target repository
         id: repo
         run: |
-          if [ -n "${{ github.event.inputs.repository }}" ]; then
-            echo "TARGET_REPO=${{ github.event.inputs.repository }}" >> $GITHUB_OUTPUT
-          else
+          INPUT_REPO="${{ github.event.inputs.repository }}"
+
+          # If no input provided, use current repository
+          if [ -z "$INPUT_REPO" ]; then
             echo "TARGET_REPO=${{ github.repository }}" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+
+          # Parse repository from various input formats
+          # Handle full GitHub URLs (https://github.com/owner/repo or https://github.com/owner/repo/issues)
+          if [[ "$INPUT_REPO" =~ ^https?://github\.com/([^/]+/[^/]+) ]]; then
+            REPO="${BASH_REMATCH[1]}"
+            # Remove trailing /issues, /pulls, etc.
+            REPO="${REPO%%/issues*}"
+            REPO="${REPO%%/pulls*}"
+            REPO="${REPO%%/actions*}"
+            echo "TARGET_REPO=$REPO" >> $GITHUB_OUTPUT
+          # Handle owner/repo format directly
+          elif [[ "$INPUT_REPO" =~ ^[^/]+/[^/]+$ ]]; then
+            echo "TARGET_REPO=$INPUT_REPO" >> $GITHUB_OUTPUT
+          else
+            echo "Error: Invalid repository format. Expected 'owner/repo' or GitHub URL"
+            exit 1
           fi
 
       - name: Install dependencies
